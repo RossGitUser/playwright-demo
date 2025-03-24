@@ -25,8 +25,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run API Tests
-        run: npx playwright test tests/api/
+        - name: Run All Playwright Tests (UI + API)
+        run: npx playwright test
+      
 
       - name: Upload HTML report on failure
         if: failure()
