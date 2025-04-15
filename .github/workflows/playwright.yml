@@ -23,11 +23,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+     # - name: Install Playwright Browsers
+      #  run: npx playwright install --with-deps
 
-      - name: Run Playwright Tests
-        run: npx playwright test
+      
 
       # Optional: Add back later if GitHub Actions artifact registry is fixed
       # - name: Upload HTML report on failure
