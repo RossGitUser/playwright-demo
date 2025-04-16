@@ -1,7 +1,7 @@
 name: Playwright API Tests
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # allows manual trigger
   push:
     branches: [ main ]
   pull_request:
@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -23,10 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-     # - name: Install Playwright Browsers
-      #  run: npx playwright install --with-deps
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
-      
+      - name: Run Playwright Tests
+        run: npx playwright test
 
       # Optional: Add back later if GitHub Actions artifact registry is fixed
       # - name: Upload HTML report on failure
