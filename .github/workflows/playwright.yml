@@ -1,7 +1,7 @@
 name: Playwright API Tests
 
 on:
-  workflow_dispatch: # allows manual trigger
+  workflow_dispatch:  # allows manual trigger
   push:
     branches: [ main ]
   pull_request:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 0  # Full history clone to avoid shallow clone issues
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -41,7 +41,7 @@ jobs:
       #     path: playwright-report/
 
       - name: Deploy HTML report to GitHub Pages
-        if: always()
+        if: always()  # Ensure the step runs regardless of the test result
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
