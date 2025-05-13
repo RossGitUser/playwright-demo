@@ -1,48 +1,35 @@
-name: Playwright API Tests
+name: Playwright Tests
 
 on:
-  workflow_dispatch:  # allows manual trigger
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0  # Full history clone to avoid shallow clone issues
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: |
+          npx playwright install
 
-      - name: Run Playwright Tests
-        run: npx playwright test
+      - name: Run Playwright tests
+        run: |
+          npx playwright test --headed
 
-      # Optional: Add back later if GitHub Actions artifact registry is fixed
-      # - name: Upload HTML report on failure
-      #   if: failure()
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: playwright-report
-      #     path: playwright-report/
-
-      - name: Deploy HTML report to GitHub Pages
-        if: always()  # Ensure the step runs regardless of the test result
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./playwright-report
